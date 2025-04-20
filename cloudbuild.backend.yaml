@@ -1,12 +1,12 @@
 steps:
   # 1. Build Docker image untuk backend
   - name: "gcr.io/cloud-builders/docker"
-    args: ["build", "-t", "gcr.io/$PROJECT_ID/galang", "."]
+    args: ["build", "-t", "gcr.io/$PROJECT_ID/notes-app-backend", "."]
     dir: "be"
 
   # 2. Push ke Container Registry / Artifact Registry
   - name: "gcr.io/cloud-builders/docker"
-    args: ["push", "gcr.io/$PROJECT_ID/galang"]
+    args: ["push", "gcr.io/$PROJECT_ID/notes-app-backend"]
 
   # 3. Deploy ke Cloud Run
   - name: "gcr.io/cloud-builders/gcloud"
@@ -15,9 +15,9 @@ steps:
       [
         "run",
         "deploy",
-        "notes-galang",
+        "notes-app",
         "--image",
-        "gcr.io/$PROJECT_ID/notes-galang",
+        "gcr.io/$PROJECT_ID/notes-app-backend",
         "--timeout",
         "1000s",
         "--port",
