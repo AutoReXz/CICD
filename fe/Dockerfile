@@ -15,8 +15,8 @@ EXPOSE 3000
 
 # Set environment variables for production
 ENV NODE_ENV=production
-# Default API URL can be overridden when deploying
-ENV API_URL=/api
+# Setting the fixed backend API URL
+ENV API_URL=https://notes-app-263444552508.us-central1.run.app/api
 
 # Start the app
 CMD ["npm", "start"]
