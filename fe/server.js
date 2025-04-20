@@ -5,7 +5,7 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
 const PORT = process.env.PORT || 3000;
 // Menggunakan environment variable untuk URL backend dengan nilai default
-const API_URL = process.env.API_URL || 'https://doker-263444552508.us-central1.run.app';
+const API_URL = process.env.API_URL || 'https://notes-app-263444552508.us-central1.run.app/api';
 
 // Setup EJS template engine
 app.set('view engine', 'ejs');
