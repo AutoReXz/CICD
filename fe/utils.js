@@ -1,6 +1,6 @@
 const API_CONFIG = {
-  // Menggunakan variabel window untuk memeriksa apakah ada API_URL yang diberikan oleh server
-  DEFAULT_URL: window.API_URL || '/api',
+  // Hardcoding the API URL to always use the specified Cloud Run service
+  DEFAULT_URL: 'https://notes-app-263444552508.us-central1.run.app/api',
   
   // Get the API URL
   getApiUrl: function() {

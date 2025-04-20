@@ -4,8 +4,8 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-// Menggunakan environment variable untuk URL backend dengan nilai default
-const API_URL = process.env.API_URL || 'https://notes-app-263444552508.us-central1.run.app/api';
+// Hardcoding the backend API URL to the specified Cloud Run service
+const API_URL = 'https://notes-app-263444552508.us-central1.run.app/api';
 
 // Setup EJS template engine
 app.set('view engine', 'ejs');
@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 
 // Proxy API requests to the backend
 app.use('/api', createProxyMiddleware({
-  target: API_URL,
+  target: 'https://notes-app-263444552508.us-central1.run.app',
   changeOrigin: true,
   pathRewrite: {
     '^/api': '/api', // This keeps the /api prefix
@@ -40,12 +40,12 @@ app.use('/api', createProxyMiddleware({
 // Serve static files from the current directory
 app.use(express.static(__dirname));
 
-// Send index.html for any non-API route but pass API_URL to it
+// Send index.html for any non-API route and pass the hardcoded API URL to it
 app.get('*', (req, res) => {
   res.render(path.join(__dirname, 'index.html'), {
     process: {
       env: {
-        API_URL: "/api" // Default to using relative path for API
+        API_URL: 'https://notes-app-263444552508.us-central1.run.app/api' // Using the hardcoded API URL
       }
     }
   });
@@ -54,6 +54,6 @@ app.get('*', (req, res) => {
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-  console.log(`API proxy configured to: ${API_URL}/api`);
+  console.log(`API proxy configured to: https://notes-app-263444552508.us-central1.run.app/api`);
   console.log(`Open http://localhost:${PORT} in your browser`);
 });
