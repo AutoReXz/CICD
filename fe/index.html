@@ -10,6 +10,11 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Setup API URL from server -->
+    <script>
+        window.API_URL = '<%= process.env.API_URL || "/api" %>';
+        console.log('API URL set to:', window.API_URL);
+    </script>
     <style>
         .fade-in {
             animation: fadeIn 0.5s;

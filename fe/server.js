@@ -4,6 +4,11 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+// Menggunakan environment variable untuk URL backend dengan nilai default
+const API_URL = process.env.API_URL || 'https://doker-263444552508.us-central1.run.app';
+
+// Setup EJS template engine
+app.set('view engine', 'ejs');
 
 // Add CORS headers middleware
 app.use((req, res, next) => {
@@ -18,7 +23,7 @@ app.use((req, res, next) => {
 
 // Proxy API requests to the backend
 app.use('/api', createProxyMiddleware({
-  target: 'https://doker-263444552508.us-central1.run.app',
+  target: API_URL,
   changeOrigin: true,
   pathRewrite: {
     '^/api': '/api', // This keeps the /api prefix
@@ -35,14 +40,20 @@ app.use('/api', createProxyMiddleware({
 // Serve static files from the current directory
 app.use(express.static(__dirname));
 
-// Send index.html for any non-API route
+// Send index.html for any non-API route but pass API_URL to it
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.render(path.join(__dirname, 'index.html'), {
+    process: {
+      env: {
+        API_URL: "/api" // Default to using relative path for API
+      }
+    }
+  });
 });
 
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-  console.log(`API proxy configured to: https://doker-263444552508.us-central1.run.app/api`);
+  console.log(`API proxy configured to: ${API_URL}/api`);
   console.log(`Open http://localhost:${PORT} in your browser`);
 });

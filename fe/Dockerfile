@@ -15,6 +15,8 @@ EXPOSE 3000
 
 # Set environment variables for production
 ENV NODE_ENV=production
+# Default API URL can be overridden when deploying
+ENV API_URL=/api
 
 # Start the app
 CMD ["npm", "start"]
